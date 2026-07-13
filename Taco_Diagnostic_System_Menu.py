@@ -38,7 +38,13 @@ def main():
 
     tk.Label(root, text="Taco Diagnostic System", font=("Arial", 16, "bold")).pack(pady=20)
 
-    # Scrollable frame for buttons
+    # Bottom button bar (packed first to guarantee visibility)
+    bottom_frame = tk.Frame(root)
+    bottom_frame.pack(side="bottom", fill="x", pady=15, padx=20)
+    tk.Button(bottom_frame, text="Setup - Add Scripts", width=25, height=3, font=("Arial", 11), command=lambda: add_scripts()).pack(anchor="w", pady=5)
+    tk.Button(bottom_frame, text="Exit", width=25, height=3, font=("Arial", 11), command=root.destroy).pack(anchor="w", pady=5)
+
+    # Scrollable frame for script buttons
     canvas = tk.Canvas(root)
     scrollbar = tk.Scrollbar(root, orient="vertical", command=canvas.yview)
     button_frame = tk.Frame(canvas)
@@ -47,8 +53,8 @@ def main():
     canvas.create_window((0, 0), window=button_frame, anchor="nw")
     canvas.configure(yscrollcommand=scrollbar.set)
 
-    canvas.pack(side="left", fill="both", expand=True, padx=20)
     scrollbar.pack(side="right", fill="y")
+    canvas.pack(side="left", fill="both", expand=True, padx=20)
 
     def refresh_buttons():
         for widget in button_frame.winfo_children():
@@ -107,12 +113,6 @@ def main():
         refresh_buttons()
 
     refresh_buttons()
-
-    # Bottom button bar
-    bottom_frame = tk.Frame(root)
-    bottom_frame.pack(side="bottom", pady=15)
-    tk.Button(bottom_frame, text="Setup - Add Scripts", width=20, height=2, command=add_scripts).pack(side="left", padx=5)
-    tk.Button(bottom_frame, text="Exit", width=20, height=2, command=root.destroy).pack(side="left", padx=5)
 
     root.mainloop()
 

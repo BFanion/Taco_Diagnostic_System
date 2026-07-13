@@ -1,6 +1,8 @@
 {
   "scripts": [
     "C:/Users/brifan/OneDrive - Taco Inc/Documents/Repositories/IMP_Log_Tool_7-13-26/IMP_Log_Tool.py",
-    "C:/Users/brifan/OneDrive - Taco Inc/Documents/Repositories/Xanadu_Log_Retriever/Xanadu_Log_Retriever.py"
+    "C:/Users/brifan/OneDrive - Taco Inc/Documents/Repositories/Xanadu_Log_Retriever/Xanadu_Log_Retriever.py",
+    "C:/Users/brifan/OneDrive - Taco Inc/Documents/Repositories/Savoy_tools_2026_Debian/Savoy_Reprogrammer_Debian/Savoy_Reprogramming_Tool.py",
+    "C:/Users/brifan/OneDrive - Taco Inc/Documents/Repositories/Taco_0018e_Isolation_EOL_Tester/taco_0018e_eol_tester_gui.py"
   ]
 }
