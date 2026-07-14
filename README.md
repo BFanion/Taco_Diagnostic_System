@@ -7,7 +7,7 @@ A graphical launcher for diagnostic Python scripts.
 - Auto-detects `.py` scripts in the same directory and displays them as launch buttons
 - **Setup** button to manually add scripts from any folder via file dialog
 - Saves manually added script paths to `menu_config.json` for persistence across sessions
-- Remove button (X) to delete manually added scripts from the menu
+- **Verbose Mode** checkbox to toggle visibility of full file paths and remove (X) buttons for added scripts
 - Scrollable interface to handle many scripts
 
 ## Usage
@@ -20,7 +20,7 @@ python Taco_Diagnostic_System_Menu.py
 
 - Click any script button to launch it
 - Click **Setup - Add Scripts** to browse and add external Python files
-- Click the red **X** next to an added script to remove it
+- Enable **Verbose Mode** to see full paths and the red **X** button to remove added scripts
 
 ## Files
 

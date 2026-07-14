@@ -30,6 +30,21 @@ def launch_script(script_path):
     subprocess.Popen([sys.executable, script_path])
 
 
+def show_readme():
+    readme_path = os.path.join(SCRIPT_DIR, "README.md")
+    win = tk.Toplevel()
+    win.title("README")
+    win.geometry("600x500")
+    text = tk.Text(win, wrap="word", font=("Consolas", 10))
+    text.pack(fill="both", expand=True, padx=10, pady=10)
+    if os.path.exists(readme_path):
+        with open(readme_path, "r") as f:
+            text.insert("1.0", f.read())
+    else:
+        text.insert("1.0", "README.md not found.")
+    text.config(state="disabled")
+
+
 def main():
     config = load_config()
     root = tk.Tk()
@@ -41,8 +56,12 @@ def main():
     # Bottom button bar (packed first to guarantee visibility)
     bottom_frame = tk.Frame(root)
     bottom_frame.pack(side="bottom", fill="x", pady=15, padx=20)
-    tk.Button(bottom_frame, text="Setup - Add Scripts", width=25, height=3, font=("Arial", 11), command=lambda: add_scripts()).pack(anchor="w", pady=5)
-    tk.Button(bottom_frame, text="Exit", width=25, height=3, font=("Arial", 11), command=root.destroy).pack(anchor="w", pady=5)
+    verbose_var = tk.BooleanVar()
+    tk.Checkbutton(bottom_frame, text="Verbose Mode", variable=verbose_var,
+                   font=("Arial", 10), command=lambda: refresh_buttons()).pack(anchor="w")
+    tk.Button(bottom_frame, text="Set-up", width=12, height=1, font=("Arial", 9), command=lambda: add_scripts()).pack(anchor="w", pady=3)
+    tk.Button(bottom_frame, text="Help", width=12, height=1, font=("Arial", 9), command=lambda: show_readme()).pack(anchor="w", pady=3)
+    tk.Button(bottom_frame, text="Exit", width=12, height=1, font=("Arial", 9), command=root.destroy).pack(anchor="w", pady=3)
 
     # Scrollable frame for script buttons
     canvas = tk.Canvas(root)
@@ -79,20 +98,21 @@ def main():
 
         # Manually added scripts from config
         if config["scripts"]:
-            tk.Label(button_frame, text="Added Scripts", font=("Arial", 10, "bold")).pack(anchor="w", pady=(15, 5))
+            tk.Label(button_frame, text="Available Tools", font=("Arial", 10, "bold")).pack(anchor="w", pady=(15, 5))
             for script_path in config["scripts"]:
                 display_name = os.path.basename(script_path).replace("_", " ").replace(".py", "")
-                folder_name = os.path.basename(os.path.dirname(script_path))
                 btn_frame = tk.Frame(button_frame)
                 btn_frame.pack(pady=3, fill="x")
                 tk.Button(
-                    btn_frame, text=f"{display_name}  ({folder_name})", width=45, height=2,
+                    btn_frame, text=display_name, width=45, height=2,
                     command=lambda p=script_path: launch_script(p)
                 ).pack(side="left")
-                tk.Button(
-                    btn_frame, text="X", width=3, height=2, fg="red",
-                    command=lambda p=script_path: remove_script(p)
-                ).pack(side="left", padx=2)
+                if verbose_var.get():
+                    tk.Label(btn_frame, text=script_path, font=("Arial", 8)).pack(side="left", padx=5)
+                    tk.Button(
+                        btn_frame, text="X", width=3, height=2, fg="red",
+                        command=lambda p=script_path: remove_script(p)
+                    ).pack(side="left", padx=2)
 
     def add_scripts():
         files = filedialog.askopenfilenames(
